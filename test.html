@@ -17,6 +17,15 @@
 			0% { transform: rotate(0deg); }
 			100% { transform: rotate(360deg); }
 		}
+		
+		.response-box {
+			margin-top: 20px;
+			padding: 10px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			font-family: monospace;
+			white-space: pre-wrap;
+		}
 	</style>
 	<script>
 		function handleSubmit(event) {
@@ -25,14 +34,14 @@
 			const videoUid = form.get('video_uid');
 			const videoLen = form.get('video_len');
 			const loader = document.getElementById('loader');
-			const output = document.getElementById('output');
-			output.innerHTML = '';
+			const responseBox = document.getElementById('response-box');
+			responseBox.innerHTML = '';
 			loader.style.display = 'block';
 			fetch(`https://cub3actionpredictor-uwlbw2mf2a-nw.a.run.app/predict?video_uid=${videoUid}&video_len=${videoLen}`)
 				.then(response => response.json())
 				.then(data => {
 					loader.style.display = 'none';
-					output.innerText = JSON.stringify(data);
+					responseBox.innerText = JSON.stringify(data, null, 2);
 				})
 				.catch(error => {
 					loader.style.display = 'none';
@@ -50,6 +59,6 @@
 		<button type="submit">Submit</button>
 	</form>
 	<div id="loader" class="loader" style="display: none;"></div>
-	<div id="output"></div>
+	<div id="response-box" class="response-box"></div>
 </body>
 </html>
