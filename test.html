@@ -1,97 +1,65 @@
-<!DOCTYPE html>
 <html>
 <head>
-	<title>API Form</title>
-	<style>
-		form {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			margin-top: 50px;
-		}
-
-		input {
-			margin-bottom: 20px;
-			padding: 10px;
-			width: 300px;
-			font-size: 16px;
-		}
-
-		button {
-			padding: 10px 20px;
-			font-size: 16px;
-			background-color: #4CAF50;
-			color: white;
-			border: none;
-			border-radius: 4px;
-			cursor: pointer;
-		}
-
-		button:hover {
-			background-color: #3e8e41;
-		}
-
-		#loader {
-			border: 16px solid #f3f3f3;
-			border-top: 16px solid #4CAF50;
-			border-radius: 50%;
-			width: 120px;
-			height: 120px;
-			animation: spin 2s linear infinite;
-			display: none;
-		}
-
-		@keyframes spin {
-			0% { transform: rotate(0deg); }
-			100% { transform: rotate(360deg); }
-		}
-
-		#response-box {
-			margin-top: 50px;
-			padding: 20px;
-			width: 600px;
-			background-color: #f3f3f3;
-			font-size: 16px;
-			white-space: pre-wrap;
-		}
-	</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<style>
+/* CSS code for loading symbol from [^1^][7] */
+.se-pre-con {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: url(https://smallenvelop.com/wp-content/uploads/2014/08/Preloader_2.gif) center no-repeat #fff;
+}
+</style>
+<script>
+$(window).on('load', function() {
+	// Animate loader off screen
+	$(".se-pre-con").fadeOut("slow");;
+});
+function submitForm() {
+    // Show loading symbol
+    $(".se-pre-con").show();
+    // Get form values
+    var video_uid = document.getElementById("video_uid").value;
+    var video_len = document.getElementById("video_len").value;
+    // Validate form values
+    if (video_uid == "" || video_len == "") {
+        alert("Please enter both parameters");
+        $(".se-pre-con").hide();
+        return false;
+    }
+    // Send request to endpoint
+    var url = "https://cub3actionpredictor-uwlbw2mf2a-nw.a.run.app/predict?video_uid=" + video_uid + "&video_len=" + video_len;
+    $.get(url, function(data, status){
+        // Display response in a preformatted element
+        document.getElementById("response").innerHTML = JSON.stringify(data, null, 4);
+        // Hide loading symbol
+        $(".se-pre-con").hide();
+    });
+}
+</script>
 </head>
 <body>
-	<form onsubmit="handleSubmit(event)">
-		<label for="video_uid">Video UID:</label>
-		<input type="text" name="video_uid" required>
 
-		<label for="video_len">Video Length:</label>
-		<input type="number" name="video_len" required>
+<div class="se-pre-con"></div> <!-- Loading symbol div -->
 
-		<button type="submit">Submit</button>
-	</form>
+<h1>Video Parameters Form</h1>
 
-	<div id="loader"></div>
-	<div id="response-box"></div>
+<form onsubmit="return submitForm()">
+  <label for="video_uid">Video UID:</label><br>
+  <input type="text" id="video_uid" name="video_uid"><br><br>
+  
+  <label for="video_len">Video Length:</label><br>
+  <input type="number" id="video_len" name="video_len"><br><br>
 
-	<script>
-		function handleSubmit(event) {
-			event.preventDefault();
-			const form = new FormData(event.target);
-			const videoUid = form.get('video_uid');
-			const videoLen = form.get('video_len');
-			const loader = document.getElementById('loader');
-			const responseBox = document.getElementById('response-box');
-			responseBox.innerHTML = '';
-			loader.style.display = 'block';
-			fetch(`https://cub3actionpredictor-uwlbw2mf2a-nw.a.run.app/predict?video_uid=${videoUid}&video_len=${videoLen}`)
-				.then(response => response.json())
-				.then(data => {
-					loader.style.display = 'none';
-					const payloadString = JSON.stringify(data.payload, null, 2);
-					responseBox.innerText = payloadString;
-				})
-				.catch(error => {
-					loader.style.display = 'none';
-					console.error(error);
-				});
-		}
-	</script>
+  <input type="submit" value="Submit">
+</form>
+
+<h2>Response</h2>
+
+<pre id="response"></pre> <!-- Response element -->
+
 </body>
 </html>
