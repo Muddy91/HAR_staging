@@ -15,20 +15,20 @@
 
 /* CSS code for form styling from  */
 form {
-    margin-top:50px;
-    margin-left:auto;
-    margin-right:auto;
-    width:500px; 
-    padding:20px; 
-    border-radius:10px; 
-    box-shadow:0px 0px 15px #888888; 
+    margin-top :50 px ;  
+    margin-left :auto ;  
+    margin-right :auto ;  
+    width :500 px ;  
+    padding :20 px ;  
+    border-radius :10 px ;  
+    box-shadow :0 px 0 px 15 px #888888 ; 
 }
 
 input[type=text], input[type=number] {
-    width:100%; 
-    padding-top:10px; 
-    padding-bottom:10px; 
-    border-radius:5px; 
+    width :100 %;  
+    padding-top :10 px ;  
+    padding-bottom :10 px ;  
+    border-radius :5 px ; 
     border:none; 
 }
 
@@ -36,7 +36,7 @@ input[type=submit] {
     width:auto; 
     padding-top:10px; 
     padding-bottom:10px; 
-    border-radius :5 px ;  
+    border-radius:5px;  
 }
 
 /* CSS code for response box styling */
@@ -44,11 +44,11 @@ input[type=submit] {
    margin-top :50 px ;  
    margin-left :auto ;  
    margin-right :auto ;  
-   width :auto ;  
-   padding-top :20 px ;  
-   padding-bottom :20 px ;  
-   border-radius :10 px ;  
-   box-shadow :0 px 0 px 15 px #888888 ;  
+   width:auto; 
+   padding-top:20px; 
+   padding-bottom:20px; 
+   border-radius:10px; 
+   box-shadow:0px 0px 15px #888888; 
 }
 </style>
 <script>
@@ -84,7 +84,7 @@ function submitForm(event) {
       $.get(url, function(data, status){
           // Display response in a preformatted element
           document.getElementById("response").innerHTML = JSON.stringify(data, null, 4);
-          // Hide loading symbol
+          // Hide loading symbol inside callback function
           $(".se-pre-con").hide();
       });
 }
