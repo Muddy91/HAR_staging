@@ -1,89 +1,57 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<style>
-/* CSS code for loading symbol from  */
-.se-pre-con {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  z-index: 9999;
-  background: url(https://smallenvelop.com/wp-content/uploads/2014/08/Preloader_2.gif) center no-repeat #fff;
-}
+    <title>My HTML File</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="A simple HTML file example">
+    <meta name="author" content="Sydney">
+    <link rel="stylesheet" href="style.css">
+    <script src="
+https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
 
-/* CSS code for form styling from https://codepen.io/colorlib/pen/rxddKy */
-form {
-    margin-top :50 px ;  
-    margin-left :auto ;  
-    margin-right :auto ;  
-    width :500 px ;  
-    padding :20 px ;  
-    border-radius :10 px ;  
-    box-shadow :0 px 0 px 15 px #888888 ;
-    font-family: "Roboto", sans-serif; /* Use a modern font */
-}
+<body>
+<h1>My HTML File</h1>
+<p>This is a simple HTML file example.</p>
 
-h1 {
-   display:block; 
-   text-align:center; 
-   color:#333; 
-   font-weight:bold; 
-}
+<!-- Your form goes here -->
+<form id="
+myForm" onsubmit="
+submitForm(event)">
+Video UID: 
+<input type="
+text" id="
+video_uid"><br><br>Video Length: 
+<input type="
+text" id="
+video_len"><br><br><input type="
+submit" value="
+Submit"></form>
 
-input[type=text], input[type=number] {
-    width :100 %;  
-    padding-top :10 px ;  
-    padding-bottom :10 px ;  
-    border-radius :5 px ;
-    border:none; 
-    outline:none; /* Remove default outline */
-}
+<!-- Your loading symbol goes here -->
+<div class="
+loader">Loading...</div>
 
-input[type=text]:focus, input[type=number]:focus {
-   border-bottom:2px solid #5fbae9; /* Add a blue border on focus */
-}
+<!-- Your response goes here -->
+<pre id="
+response"></pre>
 
-input[type=submit] {
-   width:auto; 
-   padding-top:10px; 
-   padding-bottom:10px; 
-   border-radius:5px;
-   background-image: linear-gradient(to right, #32be8f , #38d39f , #32be8f); /* Add a green gradient background */
-   color:white; /* Make text white */
-}
-
-input[type=submit]:hover {
-   box-shadow: inset -4px -4px rgba(0,0,0,.1); /* Add a shadow on hover */
-}
-
-/* CSS code for response box styling */
-#response {
-   margin-top :50 px ;  
-   margin-left :auto ;  
-   margin-right :auto ;  
-   width:auto; 
-   padding-top:20px; 
-   padding-bottom:20px; 
-   border-radius:10px; 
-   box-shadow:0px 0px 15px #888888;
-   position:relative; /* Make response box relative */
-}
-</style>
-<script>
-$(window).on('load', function() {
-	// Animate loader off screen
-	$(".se-pre-con").fadeOut("slow");;
+<!-- Your script goes here -->
+<script>// Show loading symbol when ajax request starts
+$(document).ajaxStart(function(){
+  $(".loader").addClass("show");
 });
+// Hide loading symbol when ajax request stops
+$(document).ajaxStop(function(){
+  $(".loader").removeClass("show");
+});
+
 function submitForm(event) {
 
      // Prevent default form submission
      event.preventDefault();
 
-     // Show loading symbol
-     $(".se-pre-con").show();
-    
      // Clear previous response
      document.getElementById("response").innerHTML = "";
      
@@ -94,40 +62,20 @@ function submitForm(event) {
      // Validate form values
      if (video_uid == "" || video_len == "") {
          alert("Please enter both parameters");
-         $(".se-pre-con").hide();
          return false;
      }
 
      // Send request to endpoint
-     var url = "https://cub3actionpredictor-uwlbw2mf2a-nw.a.run.app/predict?video_uid=" + video_uid + "&video_len=" + video_len;
+     var url = "https://cub3actionpredictor-uwlbw2mf2a-nw.a.run.app/predict?video_uid=
+"+ video_uid + "&video_len="+ video_len;
 
       $.get(url, function(data, status){
-          // Display response in a preformatted element
-          document.getElementById("response").innerHTML = JSON.stringify(data, null, 4);
-          // Hide loading symbol inside callback function
-          $(".se-pre-con").hide();
+        // Display response in pre element
+        document.getElementById("response").innerHTML = JSON.stringify(data, null, 2);
       });
 }
+
 </script>
-</head>
-<body>
-
-<form onsubmit="return submitForm(event)">
- <h1>Video Parameters Form</h1>
-
- <label for="video_uid">Video UID:</label><br>
- <input type="text" id="video_uid" name="video_uid"><br><br>
-
- <label for="video_len">Video Length:</label><br>
- <input type="number" id="video_len" name="video_len"><br><br>
-
- <input type="submit" value="Submit">
-</form>
-
-<div id ="response"> <!-- Response element -->
-<div class="se-pre-con"></div> <!-- Loading symbol div -->
-</div>
-
 
 </body>
 </html>
