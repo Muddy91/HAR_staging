@@ -2,7 +2,7 @@
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <style>
-/* CSS code for loading symbol from [^1^][7] */
+/* CSS code for loading symbol from  */
 .se-pre-con {
   position: fixed;
   left: 0px;
@@ -13,7 +13,7 @@
   background: url(https://smallenvelop.com/wp-content/uploads/2014/08/Preloader_2.gif) center no-repeat #fff;
 }
 
-/* CSS code for form styling from [^2^][13] */
+/* CSS code for form styling from  */
 form {
     margin-top:50px;
     margin-left:auto;
@@ -36,16 +36,16 @@ input[type=submit] {
     width:auto; 
     padding-top:10px; 
     padding-bottom:10px; 
-    border-radius:5px;  
+    border-radius :5 px ;  
 }
 
 /* CSS code for response box styling */
 #response {
-   margin-top:50px;
-   margin-left:auto;
-   margin-right:auto;
-   width:auto;  
-   padding-top:20px;  
+   margin-top :50 px ;  
+   margin-left :auto ;  
+   margin-right :auto ;  
+   width :auto ;  
+   padding-top :20 px ;  
    padding-bottom :20 px ;  
    border-radius :10 px ;  
    box-shadow :0 px 0 px 15 px #888888 ;  
@@ -56,9 +56,13 @@ $(window).on('load', function() {
 	// Animate loader off screen
 	$(".se-pre-con").fadeOut("slow");;
 });
-function submitForm() {
-    // Show loading symbol
-    $(".se-pre-con").show();
+function submitForm(event) {
+
+     // Prevent default form submission
+     event.preventDefault();
+
+     // Show loading symbol
+     $(".se-pre-con").show();
     
      // Clear previous response
      document.getElementById("response").innerHTML = "";
@@ -90,7 +94,7 @@ function submitForm() {
 
 <div class="se-pre-con"></div> <!-- Loading symbol div -->
 
-<form onsubmit="return submitForm()">
+<form onsubmit="return submitForm(event)">
  <h1>Video Parameters Form</h1>
 
  <label for="video_uid">Video UID:</label><br>
